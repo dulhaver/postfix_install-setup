@@ -30,9 +30,9 @@ smtp_sasl_password_maps = hash:/etc/postfix/sasl_password
 
 - Wie in der Konfigurationsdatei ersichtlich, holt Postfix die Zugangsdaten aus der Datei /etc/postfix/sasl_password bzw. aus einer Datenbank, die aus der sasl_password generiert wird. Die Datei sollte man vorzugsweise mit folgendem Befehl erstellen, da sonst ein Umwandeln in eine Datenbank nicht immer möglich ist. Dazu muss man ein Terminalfenster öffnen [2] und den folgenden Befehl eingeben:
 
-- create a user/password file
-`sudo touch /etc/postfix/sasl_password`  
-`smtp.mailanbieter.de username:ganzgeheimespasswort`
+- create a user/password file  
+    `sudo touch /etc/postfix/sasl_password` and restrict access  
+    `smtp.mailanbieter.de username:ganzgeheimespasswort`
 
 - restrict access for passwordfile with `sudo chmod 600 /etc/postfix/sasl_password`
 
