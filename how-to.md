@@ -35,8 +35,8 @@ postfix get's user/password from `/etc/postfix/sasl_password` bzw. from a databa
 - finally restart postif: `sudo ystemctl restart postfix.service`
 
 -----------------
-add enchryption
-----------------
+### add enchryption chapter here
+-----------------
 
 ## test functionality
 
@@ -44,5 +44,5 @@ add enchryption
 
 thereafter you could check `/var/log/mail.log` which upon sucessfull mail delivery should have something like:  
   
-> ...from=<email@gmx.net>...
-> ...to=<xyz@example.com>,... status=sent... Message accepted
+> ...from=<email@gmx.net>...  
+...to=<xyz@example.com>,... status=sent... Message accepted
