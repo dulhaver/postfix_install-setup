@@ -33,3 +33,16 @@ postfix get's user/password from `/etc/postfix/sasl_password` bzw. from a databa
 - restrict access to the passwordfile: `sudo chmod 600 /etc/postfix/sasl_password`  
 - create the database: `sudo postmap hash:/etc/postfix/sasl_password`  
 - finally restart postif: `sudo ystemctl restart postfix.service`
+
+-----------------
+add enchryption
+----------------
+
+## test functionality
+
+`mail -s "[mail-subject]" email@addresse.com < testmail.txt`
+
+thereafter you could check `/var/log/mail.log` which upon sucessfull mail delivery should have something like:  
+  
+> ...from=<email@gmx.net>...
+> ...to=<xyz@example.com>,... status=sent... Message accepted
