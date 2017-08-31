@@ -22,17 +22,14 @@
 
 Wenn der SMTP-Server auf dem Smarthost zum Versenden der Mail ein Passwort verlangt, muss die eben erstellte Konfiguration /etc/postfix/main.cf allerdings noch einmal editiert [3] und diese Zeilen eingefügt werden:
 
-`smtp_sasl_auth_enable = yes`  
-`smtp_sasl_security_options = noplaintext noanonymous` skip noplaintext if it doesn't wok (even though that's not recommended)  
-`smtp_sasl_password_maps = hash:/etc/postfix/sasl_password`
+- `smtp_sasl_auth_enable = yes`  
+- `smtp_sasl_security_options = noplaintext noanonymous` skip noplaintext if it doesn't wok (even though that's not recommended)  
+- `smtp_sasl_password_maps = hash:/etc/postfix/sasl_password`
   
 postfix get's user/password from `/etc/postfix/sasl_password` bzw. from a database generated from that `sasl_password` file  
-- create a user/password file  
-    `sudo touch /etc/postfix/sasl_password` and restrict access  
-    `smtp.mailanbieter.de username:ganzgeheimespasswort`  
   
+- create a user/password file: `sudo touch /etc/postfix/sasl_password`  
+- and add the relevant info to it: `echo "smtp.mailprovder.com [username]:[supersecretpassword] >> /etc/postfix/sasl_password`  
 - restrict access for passwordfile with `sudo chmod 600 /etc/postfix/sasl_password`  
-
-create the database with `sudo postmap hash:/etc/postfix/sasl_password`  
-
-finally restart postif with: `sudo ystemctl restart postfix.service`
+- create the database with `sudo postmap hash:/etc/postfix/sasl_password`  
+- finally restart postif with: `sudo ystemctl restart postfix.service`
