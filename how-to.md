@@ -22,24 +22,17 @@
 
 Wenn der SMTP-Server auf dem Smarthost zum Versenden der Mail ein Passwort verlangt, muss die eben erstellte Konfiguration /etc/postfix/main.cf allerdings noch einmal editiert [3] und diese Zeilen eingefügt werden:
 
-smtp_sasl_auth_enable = yes
-# noplaintext weglassen, wenn Passwörter im Klartext übertragen werden müssen:
-# (nicht empfohlen, nur wenn's anders nicht funktioniert)
-smtp_sasl_security_options = noplaintext noanonymous
-smtp_sasl_password_maps = hash:/etc/postfix/sasl_password
-
-- Wie in der Konfigurationsdatei ersichtlich, holt Postfix die Zugangsdaten aus der Datei /etc/postfix/sasl_password bzw. aus einer Datenbank, die aus der sasl_password generiert wird. Die Datei sollte man vorzugsweise mit folgendem Befehl erstellen, da sonst ein Umwandeln in eine Datenbank nicht immer möglich ist. Dazu muss man ein Terminalfenster öffnen [2] und den folgenden Befehl eingeben:
-
+`smtp_sasl_auth_enable = yes`  
+`smtp_sasl_security_options = noplaintext noanonymous` skip noplaintext if it doesn't wok (even though that's not recommended)  
+`smtp_sasl_password_maps = hash:/etc/postfix/sasl_password`
+  
+postfix get's user/password from `/etc/postfix/sasl_password` bzw. from a database generated from that `sasl_password` file  
 - create a user/password file  
     `sudo touch /etc/postfix/sasl_password` and restrict access  
-    `smtp.mailanbieter.de username:ganzgeheimespasswort`
+    `smtp.mailanbieter.de username:ganzgeheimespasswort`  
+  
+- restrict access for passwordfile with `sudo chmod 600 /etc/postfix/sasl_password`  
 
-- restrict access for passwordfile with `sudo chmod 600 /etc/postfix/sasl_password`
+create the database with `sudo postmap hash:/etc/postfix/sasl_password`  
 
-Jetzt muss noch die Datenbank erzeugt werden:
-
-`sudo postmap hash:/etc/postfix/sasl_password`
-
-Danach muss man postfix neu starten:
-
-`sudo ystemctl restart postfix.service`
+finally restart postif with: `sudo ystemctl restart postfix.service`
